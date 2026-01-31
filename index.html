@@ -3,20 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Will you be my Valentine? 💘</title>
+  <title>WARNING</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- overlay used for fade -->
+  <div id="fadeOverlay" class="fade-overlay" aria-hidden="true"></div>
+
   <main class="wrap">
-    <section class="card" id="card">
+    <!-- STAGE 1: SCARY INTRO (RO) -->
+    <section class="card intro" id="intro">
+      <div class="glitch-wrap">
+        <h1 class="glitch" data-text="ATENȚIONARE">ATENȚIONARE</h1>
+      </div>
+
+      <p class="intro-text">
+        Conținut perturbator. Dacă intri, accepți că ceea ce urmează îți poate da un fior rece.
+      </p>
+
+      <div class="scary-box">
+        <img
+          class="scary-img"
+          alt="Scary face"
+          src="https://media.tenor.com/8i6v2Xj8Yg4AAAAC/scary-smile.gif"
+        />
+      </div>
+
+      <button class="btn enter" id="enterBtn" type="button">DA, intru</button>
+      <p class="tiny">Dacă auzi ceva… nu te uita în spate.</p>
+
+      <!-- if JS can’t bind, we show errors here -->
+      <p class="js-error" id="jsError" hidden></p>
+    </section>
+
+    <!-- STAGE 2: VALENTINE -->
+    <section class="card hidden" id="valentineCard">
       <img
         class="hero"
         alt="Cute bear with roses"
         src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif"
       />
-
       <h1 class="title">Will you be my Valentine?</h1>
-
       <p class="note" id="note" aria-live="polite"></p>
 
       <div class="buttons" id="buttons">
@@ -25,17 +52,18 @@
       </div>
     </section>
 
+    <!-- SUCCESS -->
     <section class="card hidden" id="success">
       <img
         class="hero"
         alt="Bear kisses"
         src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"
       />
-      <h1 class="title">Ok yay love uuuu 💞</h1>
+      <h1 class="title"> yay love uuu 💞</h1>
     </section>
   </main>
 
-  <!-- IMPORTANT: keep this at the bottom -->
+  <!-- IMPORTANT: keep script at bottom, and NOT type="module" -->
   <script src="script.js"></script>
 </body>
 </html>
