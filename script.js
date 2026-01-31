@@ -1,30 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Stage elements
+  const intro = document.getElementById("intro");
+  const enterBtn = document.getElementById("enterBtn");
+  const fadeOverlay = document.getElementById("fadeOverlay");
+
+  const valentineCard = document.getElementById("valentineCard");
   const yesBtn = document.getElementById("yesBtn");
   const noBtn = document.getElementById("noBtn");
-  const card = document.getElementById("card");
   const success = document.getElementById("success");
   const note = document.getElementById("note");
   const buttons = document.getElementById("buttons");
 
-  // Safety check: if IDs don't match, show a helpful error
-  const missing = [];
-  if (!yesBtn) missing.push("yesBtn");
-  if (!noBtn) missing.push("noBtn");
-  if (!card) missing.push("card");
-  if (!success) missing.push("success");
-  if (!note) missing.push("note");
-  if (!buttons) missing.push("buttons");
+  // Quick sanity check
+  const must = { intro, enterBtn, fadeOverlay, valentineCard, yesBtn, noBtn, success, note, buttons };
+  const missing = Object.entries(must).filter(([,v]) => !v).map(([k]) => k);
   if (missing.length) {
-    console.error("Missing elements with IDs:", missing.join(", "));
+    console.error("Missing elements:", missing.join(", "));
     return;
   }
 
+  // --- Stage 1 -> Stage 2 transition ---
+  enterBtn.addEventListener("click", () => {
+    // Turn overlay ON (white -> black fade)
+    fadeOverlay.classList.add("on");
+
+    // After fade completes, swap screens while it's dark
+    setTimeout(() => {
+      intro.classList.add("hidden");
+      valentineCard.classList.remove("hidden");
+    }, 900);
+
+    // Then fade back out to reveal the valentine screen
+    setTimeout(() => {
+      fadeOverlay.classList.remove("on");
+    }, 1300);
+  });
+
+  // --- Valentine behavior ---
   let noCount = 0;
   let yesScale = 1;
-  let dodgeMode = false;      // turns on after a few "No" clicks
-  let moveCooldown = false;   // prevents jitter spam
+  let dodgeMode = false;
+  let moveCooldown = false;
 
-  // Similar to the popular Valentine demo
   const noTexts = [
     "No",
     "Are you sure?",
@@ -65,12 +82,10 @@ document.addEventListener("DOMContentLoaded", () => {
     yesBtn.style.zIndex = "10";
   }
 
-  function accept() {
-    card.classList.add("hidden");
+  yesBtn.addEventListener("click", () => {
+    valentineCard.classList.add("hidden");
     success.classList.remove("hidden");
-  }
-
-  yesBtn.addEventListener("click", accept);
+  });
 
   noBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -81,14 +96,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     growYes(0.25);
 
-    // After 5 clicks, NO starts dodging so you can't press it anymore
+    // After a few clicks, NO becomes impossible
     if (noCount >= 5) {
       dodgeMode = true;
       moveNo();
     }
   });
 
-  // Dodge on hover once dodgeMode is enabled
+  // Dodges once dodgeMode is enabled
   noBtn.addEventListener("mouseenter", () => {
     if (!dodgeMode) return;
     moveNo();
