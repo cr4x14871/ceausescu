@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const note = document.getElementById("note");
   const buttons = document.getElementById("buttons");
 
-  // Quick sanity check
+  // Sanity check
   const must = { intro, enterBtn, fadeOverlay, valentineCard, yesBtn, noBtn, success, note, buttons };
   const missing = Object.entries(must).filter(([,v]) => !v).map(([k]) => k);
   if (missing.length) {
@@ -19,24 +19,25 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // --- Stage 1 -> Stage 2 transition ---
+  // ===== INTRO -> VALENTINE TRANSITION =====
   enterBtn.addEventListener("click", () => {
-    // Turn overlay ON (white -> black fade)
+    // Fade to black
     fadeOverlay.classList.add("on");
 
-    // After fade completes, swap screens while it's dark
+    // While it's black, swap screens + enable pink mode
     setTimeout(() => {
       intro.classList.add("hidden");
       valentineCard.classList.remove("hidden");
+      document.body.classList.add("valentine-mode"); // <--- makes background pink
     }, 900);
 
-    // Then fade back out to reveal the valentine screen
+    // Fade back to reveal Valentine
     setTimeout(() => {
       fadeOverlay.classList.remove("on");
     }, 1300);
   });
 
-  // --- Valentine behavior ---
+  // ===== VALENTINE BEHAVIOR =====
   let noCount = 0;
   let yesScale = 1;
   let dodgeMode = false;
@@ -103,14 +104,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Dodges once dodgeMode is enabled
+  // Dodge on hover once enabled
   noBtn.addEventListener("mouseenter", () => {
     if (!dodgeMode) return;
     moveNo();
     growYes(0.10);
   });
 
-  // Extra: dodge if mouse gets close (makes it basically impossible)
+  // Extra evil: dodge if mouse gets close
   buttons.addEventListener("mousemove", (e) => {
     if (!dodgeMode || moveCooldown) return;
 
