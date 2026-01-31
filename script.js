@@ -6,16 +6,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const note = document.getElementById("note");
   const buttons = document.getElementById("buttons");
 
-  // If any of these are null, IDs don't match and nothing will work.
-  if (!yesBtn || !noBtn || !card || !success || !note || !buttons) {
-    console.error("Missing element. Check IDs in index.html.");
+  // Safety check: if IDs don't match, show a helpful error
+  const missing = [];
+  if (!yesBtn) missing.push("yesBtn");
+  if (!noBtn) missing.push("noBtn");
+  if (!card) missing.push("card");
+  if (!success) missing.push("success");
+  if (!note) missing.push("note");
+  if (!buttons) missing.push("buttons");
+  if (missing.length) {
+    console.error("Missing elements with IDs:", missing.join(", "));
     return;
   }
 
   let noCount = 0;
   let yesScale = 1;
-  let dodgeMode = false;
+  let dodgeMode = false;      // turns on after a few "No" clicks
+  let moveCooldown = false;   // prevents jitter spam
 
+  // Similar to the popular Valentine demo
   const noTexts = [
     "No",
     "Are you sure?",
@@ -50,6 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
     noBtn.style.top = rand(0, maxY) + "px";
   }
 
+  function growYes(amount) {
+    yesScale = Math.min(6.5, yesScale + amount);
+    yesBtn.style.transform = `scale(${yesScale})`;
+    yesBtn.style.zIndex = "10";
+  }
+
   function accept() {
     card.classList.add("hidden");
     success.classList.remove("hidden");
@@ -61,30 +76,28 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     noCount++;
 
-    const idx = Math.min(noCount, noTexts.length - 1);
-    noBtn.textContent = noTexts[idx];
-
+    noBtn.textContent = noTexts[Math.min(noCount, noTexts.length - 1)];
     note.textContent = "Just click YES ❤️";
 
-    yesScale = Math.min(6, yesScale + 0.25);
-    yesBtn.style.transform = `scale(${yesScale})`;
-    yesBtn.style.zIndex = "10";
+    growYes(0.25);
 
+    // After 5 clicks, NO starts dodging so you can't press it anymore
     if (noCount >= 5) {
       dodgeMode = true;
       moveNo();
     }
   });
 
+  // Dodge on hover once dodgeMode is enabled
   noBtn.addEventListener("mouseenter", () => {
     if (!dodgeMode) return;
     moveNo();
-    yesScale = Math.min(7, yesScale + 0.1);
-    yesBtn.style.transform = `scale(${yesScale})`;
+    growYes(0.10);
   });
 
+  // Extra: dodge if mouse gets close (makes it basically impossible)
   buttons.addEventListener("mousemove", (e) => {
-    if (!dodgeMode) return;
+    if (!dodgeMode || moveCooldown) return;
 
     const rect = noBtn.getBoundingClientRect();
     const dist = Math.hypot(
@@ -92,6 +105,10 @@ document.addEventListener("DOMContentLoaded", () => {
       rect.top + rect.height / 2 - e.clientY
     );
 
-    if (dist < 110) moveNo();
+    if (dist < 120) {
+      moveCooldown = true;
+      moveNo();
+      setTimeout(() => (moveCooldown = false), 60);
+    }
   });
 });
