@@ -12,8 +12,6 @@ body{
   display:grid;
   place-items:center;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-
-  /* scary default background */
   color:#e8e8e8;
   background:
     radial-gradient(circle at 20% 20%, rgba(255,255,255,.05) 0 18%, transparent 18%),
@@ -26,7 +24,6 @@ body{
   padding: 24px 0;
 }
 
-/* overlay for fade */
 .fade-overlay{
   position: fixed;
   inset: 0;
@@ -45,7 +42,6 @@ body{
   text-align:center;
 }
 
-/* INTRO styling */
 .intro{
   background: rgba(10,10,14,.92);
   border: 1px solid rgba(255,255,255,.08);
@@ -92,8 +88,6 @@ body{
   box-shadow: 0 14px 30px rgba(176,0,32,.25);
 }
 
-/* glitch title */
-.glitch-wrap{ margin-top: 4px; }
 .glitch{
   position: relative;
   display: inline-block;
@@ -106,10 +100,8 @@ body{
 .glitch::after{
   content: attr(data-text);
   position:absolute;
-  left:0;
-  top:0;
+  left:0; top:0;
   opacity:.8;
-  clip-path: inset(0 0 0 0);
 }
 .glitch::before{
   transform: translate(-2px, 0);
@@ -136,15 +128,14 @@ body{
   opacity: .75;
 }
 
-/* Error shown if JS can't bind */
 .js-error{
   margin: 14px auto 0;
   max-width: 60ch;
   color: #ffb4b4;
-  font-weight: 700;
+  font-weight: 800;
 }
 
-/* VALENTINE cards (lighter look) */
+/* Valentine */
 #valentineCard, #success{
   background: rgba(255,255,255,.88);
   color:#222;
