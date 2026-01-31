@@ -8,7 +8,7 @@
 </head>
 <body>
   <main class="wrap">
-    <div class="card" id="card">
+    <section class="card" id="card">
       <img
         class="hero"
         alt="Cute bear with roses"
@@ -19,24 +19,23 @@
 
       <p class="note" id="note" aria-live="polite"></p>
 
-      <!-- IMPORTANT: keep these IDs exactly -->
       <div class="buttons" id="buttons">
         <button class="btn yes" id="yesBtn" type="button">Yes</button>
         <button class="btn no" id="noBtn" type="button">No</button>
       </div>
-    </div>
+    </section>
 
-    <div class="card hidden" id="success">
+    <section class="card hidden" id="success">
       <img
         class="hero"
         alt="Bear kisses"
         src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"
       />
       <h1 class="title">Ok yay!!! 💞</h1>
-    </div>
+    </section>
   </main>
 
-  <!-- Put script at the end so elements exist -->
+  <!-- IMPORTANT: keep this at the bottom -->
   <script src="script.js"></script>
 </body>
 </html>
