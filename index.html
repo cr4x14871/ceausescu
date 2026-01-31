@@ -7,36 +7,35 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- overlay used for fade -->
   <div id="fadeOverlay" class="fade-overlay" aria-hidden="true"></div>
 
   <main class="wrap">
-    <!-- STAGE 1: SCARY INTRO (RO) -->
+    <!-- SCARY INTRO (RO) -->
     <section class="card intro" id="intro">
       <div class="glitch-wrap">
         <h1 class="glitch" data-text="ATENȚIONARE">ATENȚIONARE</h1>
       </div>
 
       <p class="intro-text">
-        Conținut perturbator. Dacă intri, accepți că ceea ce urmează îți poate da un fior rece.
+        Conținut tulburător. Dacă intri, accepți că ceea ce urmează poate provoca disconfort.
       </p>
 
       <div class="scary-box">
         <img
           class="scary-img"
-          alt="Scary face"
-          src="https://media.tenor.com/8i6v2Xj8Yg4AAAAC/scary-smile.gif"
+          id="scaryImg"
+          alt="Scary"
+          src="https://media.tenor.com/kd1k2Z7bVfUAAAAC/scary-smile.gif"
         />
       </div>
 
       <button class="btn enter" id="enterBtn" type="button">DA, intru</button>
-      <p class="tiny">Dacă auzi ceva… nu te uita în spate.</p>
+      <p class="tiny">Dacă auzi un sunet… nu te întoarce.</p>
 
-      <!-- if JS can’t bind, we show errors here -->
       <p class="js-error" id="jsError" hidden></p>
     </section>
 
-    <!-- STAGE 2: VALENTINE -->
+    <!-- VALENTINE -->
     <section class="card hidden" id="valentineCard">
       <img
         class="hero"
@@ -59,11 +58,10 @@
         alt="Bear kisses"
         src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"
       />
-      <h1 class="title">Ok yay!!! 💞</h1>
+      <h1 class="title"> yay love uuu 💞</h1>
     </section>
   </main>
 
-  <!-- IMPORTANT: keep script at bottom, and NOT type="module" -->
   <script src="script.js"></script>
 </body>
 </html>
