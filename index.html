@@ -3,12 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Will you be my Valentine? 💘</title>
+  <title>Valentine 💘</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Fullscreen overlay for the fade -->
+  <div id="fadeOverlay" class="fade-overlay"></div>
+
   <main class="wrap">
-    <section class="card" id="card">
+    <!-- STAGE 1: scary intro (Romanian) -->
+    <section class="card intro" id="intro">
+      <img
+        class="hero"
+        alt="Scary intro"
+        src="https://media.tenor.com/8i6v2Xj8Yg4AAAAC/scary-smile.gif"
+      />
+
+      <h1 class="title">ATENȚIONARE!</h1>
+      <p class="text">
+        Acest site conține un nivel ridicat de drăgălășenie și poate provoca zâmbete necontrolate.
+        Dacă ești pregătit/ă… apasă pe „DA, intru”.
+      </p>
+
+      <button class="btn enter" id="enterBtn" type="button">DA, intru</button>
+      <p class="tiny">⚠️ Continui pe propria răspundere.</p>
+    </section>
+
+    <!-- STAGE 2: valentine -->
+    <section class="card hidden" id="valentineCard">
       <img
         class="hero"
         alt="Cute bear with roses"
@@ -16,7 +38,6 @@
       />
 
       <h1 class="title">Will you be my Valentine?</h1>
-
       <p class="note" id="note" aria-live="polite"></p>
 
       <div class="buttons" id="buttons">
@@ -25,17 +46,17 @@
       </div>
     </section>
 
+    <!-- SUCCESS -->
     <section class="card hidden" id="success">
       <img
         class="hero"
         alt="Bear kisses"
         src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"
       />
-      <h1 class="title"> yay love uuuu 💞</h1>
+      <h1 class="title">Ok yay!!! 💞</h1>
     </section>
   </main>
 
-  <!-- IMPORTANT: keep this at the bottom -->
   <script src="script.js"></script>
 </body>
 </html>
