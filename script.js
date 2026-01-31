@@ -1,13 +1,12 @@
 (() => {
   const $ = (id) => document.getElementById(id);
 
-  // Intro
   const intro = $("intro");
   const enterBtn = $("enterBtn");
   const fadeOverlay = $("fadeOverlay");
   const jsError = $("jsError");
+  const scaryImg = $("scaryImg");
 
-  // Valentine
   const valentineCard = $("valentineCard");
   const yesBtn = $("yesBtn");
   const noBtn = $("noBtn");
@@ -15,47 +14,50 @@
   const note = $("note");
   const buttons = $("buttons");
 
-  const missing = [];
-  if (!intro) missing.push("intro");
-  if (!enterBtn) missing.push("enterBtn");
-  if (!fadeOverlay) missing.push("fadeOverlay");
-  if (!valentineCard) missing.push("valentineCard");
-  if (!yesBtn) missing.push("yesBtn");
-  if (!noBtn) missing.push("noBtn");
-  if (!success) missing.push("success");
-  if (!note) missing.push("note");
-  if (!buttons) missing.push("buttons");
+  // Image fallback list (avoids 404 breaking your vibe)
+  const scaryFallbacks = [
+    "https://media.tenor.com/kd1k2Z7bVfUAAAAC/scary-smile.gif",
+    "https://media.tenor.com/7l2pQzKQwKkAAAAC/scary-face.gif",
+    "https://media.tenor.com/8xwq9pD8D3UAAAAC/scary.gif"
+  ];
+  if (scaryImg) {
+    let i = 0;
+    scaryImg.addEventListener("error", () => {
+      i++;
+      if (i < scaryFallbacks.length) scaryImg.src = scaryFallbacks[i];
+    });
+  }
 
+  const missing = [];
+  for (const [k, v] of Object.entries({
+    intro, enterBtn, fadeOverlay, valentineCard, yesBtn, noBtn, success, note, buttons
+  })) {
+    if (!v) missing.push(k);
+  }
   if (missing.length) {
-    console.error("Missing elements:", missing);
+    console.error("Missing elements with IDs:", missing.join(", "));
     if (jsError) {
       jsError.hidden = false;
       jsError.textContent =
-        "JS didn’t start because these IDs are missing in index.html: " +
-        missing.join(", ") +
-        ". Make sure you copied the files exactly and they are in the repo root.";
+        "Lipsește în index.html următorul ID: " + missing.join(", ") +
+        ". Copiază fișierele exact și pune-le în root.";
     }
     return;
   }
 
-  // --- Stage transition: scary -> fade to black -> valentine ---
+  // Stage 1 -> Stage 2
   enterBtn.addEventListener("click", () => {
-    // fade to black
     fadeOverlay.classList.add("on");
-
-    // while screen is black, swap content
     setTimeout(() => {
       intro.classList.add("hidden");
       valentineCard.classList.remove("hidden");
     }, 900);
-
-    // fade back to reveal valentine
     setTimeout(() => {
       fadeOverlay.classList.remove("on");
     }, 1300);
   });
 
-  // --- Valentine behavior ---
+  // Valentine behavior
   let noCount = 0;
   let yesScale = 1;
   let dodgeMode = false;
@@ -86,7 +88,6 @@
   function moveNo() {
     const btnRect = noBtn.getBoundingClientRect();
     const areaRect = buttons.getBoundingClientRect();
-
     const maxX = Math.max(0, areaRect.width - btnRect.width);
     const maxY = Math.max(0, areaRect.height - btnRect.height);
 
@@ -115,7 +116,6 @@
 
     growYes(0.25);
 
-    // After a few clicks, NO becomes impossible
     if (noCount >= 5) {
       dodgeMode = true;
       moveNo();
