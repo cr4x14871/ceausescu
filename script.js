@@ -1,12 +1,16 @@
 (() => {
   const $ = (id) => document.getElementById(id);
 
+  // Intro
   const intro = $("intro");
   const enterBtn = $("enterBtn");
-  const fadeOverlay = $("fadeOverlay");
   const jsError = $("jsError");
-  const scaryImg = $("scaryImg");
 
+  // Overlay
+  const fadeOverlay = $("fadeOverlay");
+  const overlayText = $("overlayText");
+
+  // Valentine
   const valentineCard = $("valentineCard");
   const yesBtn = $("yesBtn");
   const noBtn = $("noBtn");
@@ -14,50 +18,59 @@
   const note = $("note");
   const buttons = $("buttons");
 
-  // Image fallback list (avoids 404 breaking your vibe)
-  const scaryFallbacks = [
-    "https://media.tenor.com/kd1k2Z7bVfUAAAAC/scary-smile.gif",
-    "https://media.tenor.com/7l2pQzKQwKkAAAAC/scary-face.gif",
-    "https://media.tenor.com/8xwq9pD8D3UAAAAC/scary.gif"
-  ];
-  if (scaryImg) {
-    let i = 0;
-    scaryImg.addEventListener("error", () => {
-      i++;
-      if (i < scaryFallbacks.length) scaryImg.src = scaryFallbacks[i];
-    });
-  }
-
   const missing = [];
   for (const [k, v] of Object.entries({
-    intro, enterBtn, fadeOverlay, valentineCard, yesBtn, noBtn, success, note, buttons
+    intro, enterBtn, fadeOverlay, overlayText,
+    valentineCard, yesBtn, noBtn, success, note, buttons
   })) {
     if (!v) missing.push(k);
   }
+
   if (missing.length) {
-    console.error("Missing elements with IDs:", missing.join(", "));
+    console.error("Missing elements:", missing);
     if (jsError) {
       jsError.hidden = false;
       jsError.textContent =
-        "Lipsește în index.html următorul ID: " + missing.join(", ") +
-        ". Copiază fișierele exact și pune-le în root.";
+        "Lipsesc elemente în index.html: " + missing.join(", ") +
+        ". Copiază fișierele exact (în root).";
     }
     return;
   }
 
-  // Stage 1 -> Stage 2
+  // ---- Stage 1 -> Overlay -> Stage 2 ----
+  // Total black time ~4s:
+  // 1) fade to black (900ms)
+  // 2) show gif+text while black
+  // 3) keep black for ~4s total then fade out
   enterBtn.addEventListener("click", () => {
+    // Change overlay text to "Ești sigur?"
+    overlayText.textContent = "Ești sigur?";
+
+    // Start fade to black
     fadeOverlay.classList.add("on");
+
+    // Show GIF + text ONLY after the fade has mostly gone black
+    setTimeout(() => {
+      fadeOverlay.classList.add("show-content");
+    }, 900);
+
+    // While it's black, swap screens (intro -> valentine)
     setTimeout(() => {
       intro.classList.add("hidden");
       valentineCard.classList.remove("hidden");
-    }, 900);
+    }, 1200);
+
+    // Keep it black around 4 seconds, then hide overlay content + fade out
+    setTimeout(() => {
+      fadeOverlay.classList.remove("show-content");
+    }, 4500);
+
     setTimeout(() => {
       fadeOverlay.classList.remove("on");
-    }, 1300);
+    }, 4900);
   });
 
-  // Valentine behavior
+  // ---- Valentine logic ----
   let noCount = 0;
   let yesScale = 1;
   let dodgeMode = false;
@@ -88,6 +101,7 @@
   function moveNo() {
     const btnRect = noBtn.getBoundingClientRect();
     const areaRect = buttons.getBoundingClientRect();
+
     const maxX = Math.max(0, areaRect.width - btnRect.width);
     const maxY = Math.max(0, areaRect.height - btnRect.height);
 
@@ -116,6 +130,7 @@
 
     growYes(0.25);
 
+    // After a few NO clicks, make NO dodge
     if (noCount >= 5) {
       dodgeMode = true;
       moveNo();
