@@ -15,13 +15,14 @@
         src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif"
       />
 
-      <h1 class="title" id="title">Will you be my Valentine?</h1>
+      <h1 class="title">Will you be my Valentine?</h1>
 
       <p class="note" id="note" aria-live="polite"></p>
 
+      <!-- IMPORTANT: keep these IDs exactly -->
       <div class="buttons" id="buttons">
-        <button class="btn yes" id="yesBtn">Yes</button>
-        <button class="btn no" id="noBtn">No</button>
+        <button class="btn yes" id="yesBtn" type="button">Yes</button>
+        <button class="btn no" id="noBtn" type="button">No</button>
       </div>
     </div>
 
@@ -35,6 +36,7 @@
     </div>
   </main>
 
+  <!-- Put script at the end so elements exist -->
   <script src="script.js"></script>
 </body>
 </html>
