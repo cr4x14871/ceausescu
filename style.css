@@ -1,76 +1,87 @@
 :root{
-  --yes:#22c55e;
-  --no:#ef4444;
+  --bg1:#ffdde1;
+  --bg2:#ee9ca7;
+  --card:#ffffffcc;
+  --text:#222;
+  --shadow: 0 20px 60px rgba(0,0,0,.15);
+  --yes:#22c55e;  /* green */
+  --no:#ef4444;   /* red */
 }
 
-*{box-sizing:border-box}
+*{ box-sizing:border-box; }
 
 body{
   margin:0;
   min-height:100vh;
   display:grid;
   place-items:center;
-  font-family:system-ui;
-  background:#050507;
-  color:#eee;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 20% 20%, #fff 0 18%, transparent 18%),
+    radial-gradient(circle at 80% 30%, #fff 0 14%, transparent 14%),
+    linear-gradient(135deg, var(--bg1), var(--bg2));
 }
 
-.wrap{width:min(700px,90vw)}
+.wrap{
+  width:min(720px, 92vw);
+  padding: 24px 0;
+}
 
 .card{
-  background:#0c0c11;
-  border-radius:20px;
-  padding:24px;
+  background:var(--card);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: 24px;
+  padding: 26px 20px 30px;
+  box-shadow: var(--shadow);
   text-align:center;
-  box-shadow:0 20px 60px #000;
 }
 
-.fade-overlay{
-  position:fixed;
-  inset:0;
-  background:#000;
-  opacity:0;
-  pointer-events:none;
-  transition:.8s;
-  z-index:99;
-}
-.fade-overlay.on{opacity:1}
-
-.intro-text{opacity:.85;margin-bottom:14px}
-
-.btn{
-  padding:10px 22px;
-  border:0;
-  border-radius:12px;
-  font-size:18px;
-  font-weight:900;
-  cursor:pointer;
+.hero{
+  height: 220px;
+  width: auto;
+  display:block;
+  margin: 0 auto 10px;
 }
 
-.enter{background:#b00020;color:white}
-
-.scary-box{
-  margin:16px auto;
-  width:260px;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow:0 0 30px #000;
+.title{
+  margin: 10px 0 10px;
+  font-size: clamp(22px, 4vw, 38px);
+  font-weight: 800;
 }
 
-.scary-img{width:100%;display:block}
-
-.hidden{display:none}
-
-.hero{width:200px}
+.note{
+  margin: 0 0 10px;
+  min-height: 24px;
+  font-weight: 700;
+}
 
 .buttons{
   display:flex;
   justify-content:center;
-  gap:16px;
-  margin-top:12px;
-  position:relative;
-  min-height:60px;
+  gap: 16px;
+  margin-top: 10px;
+  flex-wrap:wrap;
+
+  /* Needed so NO can move inside this box */
+  position: relative;
+  min-height: 72px;
 }
 
-.yes{background:var(--yes);color:white}
-.no{background:var(--no);color:white}
+.btn{
+  border:0;
+  border-radius: 12px;
+  padding: 10px 24px;
+  font-size: 18px;
+  font-weight: 800;
+  cursor:pointer;
+  transition: transform .12s ease;
+  user-select:none;
+  touch-action: manipulation;
+}
+
+.yes{ background: var(--yes); color:white; }
+.no{ background: var(--no); color:white; }
+
+.hidden{ display:none; }
