@@ -1,36 +1,55 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Stage elements
-  const intro = document.getElementById("intro");
-  const enterBtn = document.getElementById("enterBtn");
-  const fadeOverlay = document.getElementById("fadeOverlay");
+(() => {
+  const $ = (id) => document.getElementById(id);
 
-  const valentineCard = document.getElementById("valentineCard");
-  const yesBtn = document.getElementById("yesBtn");
-  const noBtn = document.getElementById("noBtn");
-  const success = document.getElementById("success");
-  const note = document.getElementById("note");
-  const buttons = document.getElementById("buttons");
+  // Intro
+  const intro = $("intro");
+  const enterBtn = $("enterBtn");
+  const fadeOverlay = $("fadeOverlay");
+  const jsError = $("jsError");
 
-  // Quick sanity check
-  const must = { intro, enterBtn, fadeOverlay, valentineCard, yesBtn, noBtn, success, note, buttons };
-  const missing = Object.entries(must).filter(([,v]) => !v).map(([k]) => k);
+  // Valentine
+  const valentineCard = $("valentineCard");
+  const yesBtn = $("yesBtn");
+  const noBtn = $("noBtn");
+  const success = $("success");
+  const note = $("note");
+  const buttons = $("buttons");
+
+  const missing = [];
+  if (!intro) missing.push("intro");
+  if (!enterBtn) missing.push("enterBtn");
+  if (!fadeOverlay) missing.push("fadeOverlay");
+  if (!valentineCard) missing.push("valentineCard");
+  if (!yesBtn) missing.push("yesBtn");
+  if (!noBtn) missing.push("noBtn");
+  if (!success) missing.push("success");
+  if (!note) missing.push("note");
+  if (!buttons) missing.push("buttons");
+
   if (missing.length) {
-    console.error("Missing elements:", missing.join(", "));
+    console.error("Missing elements:", missing);
+    if (jsError) {
+      jsError.hidden = false;
+      jsError.textContent =
+        "JS didn’t start because these IDs are missing in index.html: " +
+        missing.join(", ") +
+        ". Make sure you copied the files exactly and they are in the repo root.";
+    }
     return;
   }
 
-  // --- Stage 1 -> Stage 2 transition ---
+  // --- Stage transition: scary -> fade to black -> valentine ---
   enterBtn.addEventListener("click", () => {
-    // Turn overlay ON (white -> black fade)
+    // fade to black
     fadeOverlay.classList.add("on");
 
-    // After fade completes, swap screens while it's dark
+    // while screen is black, swap content
     setTimeout(() => {
       intro.classList.add("hidden");
       valentineCard.classList.remove("hidden");
     }, 900);
 
-    // Then fade back out to reveal the valentine screen
+    // fade back to reveal valentine
     setTimeout(() => {
       fadeOverlay.classList.remove("on");
     }, 1300);
@@ -73,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     noBtn.style.position = "absolute";
     noBtn.style.left = rand(0, maxX) + "px";
-    noBtn.style.top = rand(0, maxY) + "px";
+    noBtn.style.top  = rand(0, maxY) + "px";
   }
 
   function growYes(amount) {
@@ -103,21 +122,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Dodges once dodgeMode is enabled
   noBtn.addEventListener("mouseenter", () => {
     if (!dodgeMode) return;
     moveNo();
     growYes(0.10);
   });
 
-  // Extra: dodge if mouse gets close (makes it basically impossible)
   buttons.addEventListener("mousemove", (e) => {
     if (!dodgeMode || moveCooldown) return;
 
     const rect = noBtn.getBoundingClientRect();
     const dist = Math.hypot(
       rect.left + rect.width / 2 - e.clientX,
-      rect.top + rect.height / 2 - e.clientY
+      rect.top  + rect.height / 2 - e.clientY
     );
 
     if (dist < 120) {
@@ -126,4 +143,4 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => (moveCooldown = false), 60);
     }
   });
-});
+})();
