@@ -4,8 +4,8 @@
   --card:#ffffffcc;
   --text:#222;
   --shadow: 0 20px 60px rgba(0,0,0,.15);
-  --yes:#22c55e;  /* green-ish like many clones */
-  --no:#ef4444;   /* red-ish */
+  --yes:#22c55e;  /* green */
+  --no:#ef4444;   /* red */
 }
 
 *{ box-sizing:border-box; }
@@ -63,6 +63,10 @@ body{
   gap: 16px;
   margin-top: 10px;
   flex-wrap:wrap;
+
+  /* IMPORTANT: needed for the "No" button to move inside this box */
+  position: relative;
+  min-height: 64px;
 }
 
 .btn{
@@ -77,14 +81,7 @@ body{
   touch-action: manipulation;
 }
 
-.yes{
-  background: var(--yes);
-  color: white;
-}
-
-.no{
-  background: var(--no);
-  color: white;
-}
+.yes{ background: var(--yes); color:white; }
+.no{ background: var(--no); color:white; }
 
 .hidden{ display:none; }
