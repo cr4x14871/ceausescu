@@ -1,6 +1,6 @@
 :root{
-  --yes:#22c55e;
-  --no:#ef4444;
+  --yes:#22c55e;  /* green */
+  --no:#ef4444;   /* red */
   --shadow: 0 20px 60px rgba(0,0,0,.35);
 }
 
@@ -24,6 +24,7 @@ body{
   padding: 24px 0;
 }
 
+/* ===== Overlay (fade + content shown after click) ===== */
 .fade-overlay{
   position: fixed;
   inset: 0;
@@ -32,9 +33,50 @@ body{
   pointer-events: none;
   transition: opacity 900ms ease;
   z-index: 9999;
-}
-.fade-overlay.on{ opacity: 1; }
 
+  display:grid;
+  place-items:center;
+}
+
+.fade-overlay.on{
+  opacity: 1;
+  pointer-events: none;
+}
+
+.overlay-content{
+  display:grid;
+  gap: 14px;
+  place-items:center;
+
+  /* Hidden by default so nothing shows on initial page load */
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.fade-overlay.show-content .overlay-content{
+  opacity: 1;
+  transform: scale(1);
+}
+
+.overlay-gif{
+  width: min(340px, 78vw);
+  height: auto;
+  filter: contrast(1.15) saturate(0.9);
+  border-radius: 16px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.55);
+}
+
+.overlay-text{
+  font-weight: 1000;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  font-size: clamp(18px, 4.2vw, 34px);
+  color: #fff;
+  opacity: .92;
+}
+
+/* ===== Cards ===== */
 .card{
   border-radius: 24px;
   padding: 26px 20px 30px;
@@ -42,31 +84,26 @@ body{
   text-align:center;
 }
 
+/* Intro look */
 .intro{
   background: rgba(10,10,14,.92);
   border: 1px solid rgba(255,255,255,.08);
 }
 
 .intro-text{
-  margin: 10px auto 14px;
+  margin: 10px auto 12px;
   max-width: 52ch;
   line-height: 1.35;
-  color: rgba(232,232,232,.9);
+  color: rgba(232,232,232,.92);
+}
+.intro-text.subtle{
+  opacity: .8;
 }
 
-.scary-box{
-  margin: 12px auto 16px;
-  width: min(420px, 92%);
-  border-radius: 16px;
-  overflow:hidden;
-  border: 1px solid rgba(255,255,255,.10);
-  box-shadow: 0 16px 40px rgba(0,0,0,.45);
-}
-
-.scary-img{
-  width:100%;
-  display:block;
-  filter: contrast(1.1) saturate(.9);
+.tiny{
+  margin: 12px 0 0;
+  font-size: 12px;
+  opacity: .75;
 }
 
 .btn{
@@ -88,6 +125,7 @@ body{
   box-shadow: 0 14px 30px rgba(176,0,32,.25);
 }
 
+/* Glitch title */
 .glitch{
   position: relative;
   display: inline-block;
@@ -122,12 +160,6 @@ body{
   100%{ clip-path: inset(30% 0 45% 0); }
 }
 
-.tiny{
-  margin: 12px 0 0;
-  font-size: 12px;
-  opacity: .75;
-}
-
 .js-error{
   margin: 14px auto 0;
   max-width: 60ch;
@@ -135,7 +167,7 @@ body{
   font-weight: 800;
 }
 
-/* Valentine */
+/* Valentine + success cards are lighter */
 #valentineCard, #success{
   background: rgba(255,255,255,.88);
   color:#222;
