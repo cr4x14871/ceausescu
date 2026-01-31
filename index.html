@@ -4,13 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WARNING</title>
+
+  <!-- (Optional) Helps while developing on GitHub Pages -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="fadeOverlay" class="fade-overlay" aria-hidden="true"></div>
+  <!-- Fade overlay (starts empty/hidden; content appears only after click) -->
+  <div id="fadeOverlay" class="fade-overlay" aria-hidden="true">
+    <div class="overlay-content" id="overlayContent" aria-hidden="true">
+      <img
+        id="overlayGif"
+        class="overlay-gif"
+        src="https://media.tenor.com/wbEEltY8dm0AAAAM/smile-weirdcore.gif"
+        alt="smile"
+      />
+      <div id="overlayText" class="overlay-text">Ești sigur?</div>
+    </div>
+  </div>
 
   <main class="wrap">
-    <!-- SCARY INTRO (RO) -->
+    <!-- INTRO (RO) — NO GIF HERE -->
     <section class="card intro" id="intro">
       <div class="glitch-wrap">
         <h1 class="glitch" data-text="ATENȚIONARE">ATENȚIONARE</h1>
@@ -20,18 +35,13 @@
         Conținut tulburător. Dacă intri, accepți că ceea ce urmează poate provoca disconfort.
       </p>
 
-      <div class="scary-box">
-        <img
-          class="scary-img"
-          id="scaryImg"
-          alt="Scary"
-          src="https://media.tenor.com/kd1k2Z7bVfUAAAAC/scary-smile.gif"
-        />
-      </div>
+      <p class="intro-text subtle">
+        Dacă ești pregătit/ă… apasă butonul.
+      </p>
 
       <button class="btn enter" id="enterBtn" type="button">DA, intru</button>
-      <p class="tiny">Dacă auzi un sunet… nu te întoarce.</p>
 
+      <p class="tiny">Nu te uita în spate.</p>
       <p class="js-error" id="jsError" hidden></p>
     </section>
 
@@ -43,6 +53,7 @@
         src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif"
       />
       <h1 class="title">Will you be my Valentine?</h1>
+
       <p class="note" id="note" aria-live="polite"></p>
 
       <div class="buttons" id="buttons">
@@ -58,7 +69,7 @@
         alt="Bear kisses"
         src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"
       />
-      <h1 class="title"> yay love uuu 💞</h1>
+      <h1 class="title">Ok yay!!! 💞</h1>
     </section>
   </main>
 
